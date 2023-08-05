@@ -10,10 +10,16 @@ server.get("/test", (req, res)=>{
     console.log('test endpoint hit')
 })
 
-server.get("/testdb", (req, res)=>{
-    const data = Read(1);
-    if(data) 
+let test_id = 1
+
+server.get("/testdb", async (req, res)=>{
+    const data = await Read(test_id);
+    try{
+        test_id = data[0].movie_id
         res.json({"message":"DATABASE WORKS"}).status(200)
+    }catch(err){
+        res.json({"message":"DATABASE NOT WORKING"}).status(200)
+    }
     console.log('test endpoint hit database')
 })
 
