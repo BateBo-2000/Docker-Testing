@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  database: 
+    image: mysqlimage
+    volumes:  
+      - test-data:/var/lib/mydatabase
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+  backend:
+    image: backend
+    ports:
+      - 3001:3001
+    working_dir: /backend
+    volumes:
+      - /backend
+    environment:
+      MYSQL_HOST: database
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DB: test
+    depends_on:
+      - database
+  frontend: 
+    image: frontend
+    ports:
+      - 3000:3000
+    working_dir: /frontend
+volumes:
+  test-data:

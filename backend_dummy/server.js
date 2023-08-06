@@ -14,6 +14,7 @@ let test_id = 1
 
 server.get("/testdb", async (req, res)=>{
     const data = await Read(test_id);
+    console.log(data)
     try{
         test_id = data[0].movie_id
         res.json({"message":"DATABASE WORKS"}).status(200)
@@ -26,7 +27,7 @@ server.get("/testdb", async (req, res)=>{
 
 async function Read (movie_id) {
     try{
-        let sql = `select * from movies where movie_id = ${movie_id*1}`
+        let sql = `select * from Movies where movie_id = ${movie_id*1}`
         const [data, _] = await db.execute(sql)
         return (data)
     }catch(err){
