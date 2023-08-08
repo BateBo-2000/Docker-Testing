@@ -5,6 +5,7 @@ services:
     image: mysqlimage
     volumes:  
       - test-data:/var/lib/mydatabase
+      - ./db_dummy:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test
@@ -13,8 +14,6 @@ services:
     ports:
       - 3001:3001
     working_dir: /backend
-    volumes:
-      - backend-volume:/backend/data
     environment:
       MYSQL_HOST: database
       MYSQL_USER: root
@@ -27,9 +26,5 @@ services:
     ports:
       - 3000:3000
     working_dir: /frontend
-    volumes:
-      - frontend-volume:/frontend/data
 volumes:
   test-data:
-  frontend-volume:
-  backend-volume:
